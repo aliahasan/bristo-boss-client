@@ -1,22 +1,46 @@
-import React from "react";
-
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../AuthProvider/AuthProvider";
+import { FaShoppingCart } from "react-icons/fa";
+import useCart from "../Hooks/useCart";
 const Navbar = () => {
+  const { user, logout } = useContext(AuthContext);
+  const [cart] = useCart()
+  const handleLogout = () => {
+    logout()
+      .then(() => {})
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   const navLinks = (
     <>
       <li>
-        <a>Item 1</a>
+        <Link to={"/"}>Home</Link>
       </li>
       <li>
-        <a>Parent</a>
+        <Link to={"/menu"}>Menu</Link>
       </li>
       <li>
-        <a>Item 3</a>
+        <Link to={"/order/salad"}>Order Food</Link>
+      </li>
+      <li>
+        <Link to={"/secret"}>Secret</Link>
+      </li>
+      <li>
+        <Link to={"/dashboard/cart"}>
+          <button className="btn btn-sm">
+            <FaShoppingCart className="mr-2"></FaShoppingCart>
+            <div className="badge badge-secondary">{cart.length}</div>
+          </button>
+        </Link>
       </li>
     </>
   );
+
   return (
     <>
-      <div className="navbar z-10 fixed  bg-black bg-opacity-0 max-w-screen-2xl text-white">
+      <div className="navbar z-10 fixed  bg-black bg-opacity-30 max-w-screen-2xl text-green-600">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -48,7 +72,24 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{navLinks}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Button</a>
+          {user ? (
+           <>
+              <img className="w-12 h-12 rounded-full
+            " src={user?.photoURL} alt="" />
+            <li>
+              <button className="btn" onClick={handleLogout}>
+                Logout
+              </button>
+            </li>
+         
+           </>
+          ) : (
+            <li>
+              <Link className="btn" to={"/login"}>
+                Login
+              </Link>
+            </li>
+          )}
         </div>
       </div>
     </>

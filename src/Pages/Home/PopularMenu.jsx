@@ -1,17 +1,11 @@
-import React, { useEffect, useState } from "react";
 import SectionTitle from "../../Components/SectionTitle";
 import MenuItem from "../../Shared/MenuItem/MenuItem";
+import useMenu from "../../Hooks/useMenu";
+import { Link } from "react-router-dom";
 
 const PopularMenu = () => {
-  const [menu, setMenu] = useState([]);
-  useEffect(() => {
-    fetch("menu.json")
-      .then((res) => res.json())
-      .then((data) => {
-        const popularItems = data.filter((item) => item.category === "popular");
-        setMenu(popularItems);
-      });
-  }, []);
+  const {menu} = useMenu();
+  const popular = menu.filter((item) => item.category === "popular");
 
   return (
     <div>
@@ -22,14 +16,16 @@ const PopularMenu = () => {
         ></SectionTitle>
 
         <div className="grid grid-cols-2 gap-8 py-4 px-4">
-          {menu.map((item, index) => (
+          {popular.map((item, index) => (
             <MenuItem key={index} item={item}></MenuItem>
           ))}
         </div>
         <div className="text-center">
-          <button className="btn btn-outline border-0 border-b-4 mt-4">
+       <Link to={`/menu`}>
+       <button className="btn btn-outline border-0 border-b-4 mt-4">
             View full menu
           </button>
+       </Link>
         </div>
       </section>
     </div>
