@@ -12,10 +12,12 @@ import {
 import { FaEnvelope, FaSpoon } from "react-icons/fa6";
 import { NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../Hooks/useAdmin";
+import useCart from "../Hooks/useCart";
 
 const DashBoard = () => {
   // todo get isadmin value from databae
   const [isAdmin] = useAdmin()
+  const [cart] = useCart()
 
   return (
     <div className="flex">
@@ -35,7 +37,7 @@ const DashBoard = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to={"/dashboard/manageitems"}>
+                <NavLink to={"/dashboard/manageItems"}>
                   <FaList></FaList>Mange Items
                 </NavLink>
               </li>
@@ -59,12 +61,12 @@ const DashBoard = () => {
               </li>
               <li>
                 <NavLink to={"/dashboard/reservation"}>
-                  <FaCalendar></FaCalendar>Reservation
+                  <FaCalendar></FaCalendar>My Reservation
                 </NavLink>
               </li>
               <li>
-                <NavLink to={"/order/salad"}>
-                  <FaShoppingCart></FaShoppingCart> My Cart
+                <NavLink to={"/dashboard/cart"}>
+                  <FaShoppingCart></FaShoppingCart> My Cart ({cart.length})
                 </NavLink>
               </li>
               <li>
@@ -73,8 +75,8 @@ const DashBoard = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to={"/dashboard/booking"}>
-                  <FaList></FaList> My Bookings
+                <NavLink to={"/dashboard/paymentHistory"}>
+                  <FaList></FaList> Payment History
                 </NavLink>
               </li>
             </>

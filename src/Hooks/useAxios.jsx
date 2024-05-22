@@ -4,13 +4,13 @@ import useAuth from "./useAuth";
 import { useNavigate } from "react-router-dom";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://bistro-boss-server-gray-tau.vercel.app",
   withCredentials: true,
 });
 const useAxios = () => {
   const { logout } = useAuth();
   const navigate = useNavigate();
-  // request interceptor to add authorizataion header for every secure call to the api
+ 
   useEffect(() => {
     axiosInstance.interceptors.request.use(
       function (config) {

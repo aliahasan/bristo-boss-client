@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import { FaShoppingCart } from "react-icons/fa";
 import useCart from "../Hooks/useCart";
+import useAdmin from "../Hooks/useAdmin";
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
-  const [cart] = useCart()
+  const admin = useAdmin();
+  const [cart] = useCart();
   const handleLogout = () => {
     logout()
       .then(() => {})
@@ -24,9 +26,16 @@ const Navbar = () => {
       <li>
         <Link to={"/order/salad"}>Order Food</Link>
       </li>
-      <li>
-        <Link to={"/secret"}>Secret</Link>
+      {user && admin && (
+        <li>
+          <Link to={"/dashboard/adminHome"}>DashBoard</Link>
+        </li>
+      )}
+      {user && !admin &&
+        <li>
+        <Link to={"/dashboard/userHome"}>DashBoard</Link>
       </li>
+      }
       <li>
         <Link to={"/dashboard/cart"}>
           <button className="btn btn-sm">
@@ -73,16 +82,19 @@ const Navbar = () => {
         </div>
         <div className="navbar-end">
           {user ? (
-           <>
-              <img className="w-12 h-12 rounded-full
-            " src={user?.photoURL} alt="" />
-            <li>
-              <button className="btn" onClick={handleLogout}>
-                Logout
-              </button>
-            </li>
-         
-           </>
+            <>
+              <img
+                className="w-12 h-12 rounded-full
+            "
+                src={user?.photoURL}
+                alt=""
+              />
+              <li>
+                <button className="btn" onClick={handleLogout}>
+                  Logout
+                </button>
+              </li>
+            </>
           ) : (
             <li>
               <Link className="btn" to={"/login"}>

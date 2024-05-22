@@ -14,6 +14,10 @@ import AddItem from "../Pages/DashBoard/AddItem/AddItem";
 import AdminRoutes from "./AdminRoutes/AdminRoutes";
 import MangeItems from "../Pages/DashBoard/MangeItems/MangeItems";
 import UpdateItem from "../Pages/DashBoard/UpdateItem/UpdateItem";
+import Payment from "../Pages/DashBoard/Payment/Payment";
+import PaymentHistory from "../Pages/DashBoard/PaymentHistory/PaymentHistory";
+import UserHome from "../Pages/DashBoard/UserHome/UserHome";
+import AdminHome from "../Pages/DashBoard/AdminHome/AdminHome";
 
 const router = createBrowserRouter([
   {
@@ -61,10 +65,32 @@ const router = createBrowserRouter([
     ),
     children: [
       {
+        path: "userHome",
+        element: <UserHome></UserHome>,
+      },
+
+      {
         path: "cart",
         element: <Cart></Cart>,
       },
+      {
+        path: "payment",
+        element: <Payment></Payment>,
+      },
+      {
+        path: "paymentHistory",
+        element: <PaymentHistory></PaymentHistory>,
+      },
       // only  admin routes
+
+      {
+        path: "adminHome",
+        element: (
+          <AdminRoutes>
+            <AdminHome></AdminHome>,
+          </AdminRoutes>
+        ),
+      },
       {
         path: "addItems",
         element: (
@@ -82,7 +108,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "manageitems",
+        path: "manageItems",
         element: (
           <AdminRoutes>
             <MangeItems></MangeItems>
@@ -97,7 +123,7 @@ const router = createBrowserRouter([
           </AdminRoutes>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/menu/${params.id}`),
+          fetch(`https://bistro-boss-server-gray-tau.vercel.app/menu/${params.id}`),
       },
     ],
   },
